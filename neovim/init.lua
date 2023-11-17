@@ -6,8 +6,8 @@ vim.opt.clipboard = "unnamedplus,unnamed"
 
 -- Spaces indentation
 vim.opt.expandtab = true -- converts tabs to spaces
-vim.opt.tabstop = 2 -- tab equals 2 spaces
-vim.opt.shiftwidth = 2 -- indent size in characters
+vim.opt.tabstop = 4 -- tab equals 2 spaces
+vim.opt.shiftwidth = 4 -- indent size in characters
 
 -- Show whitespace (:list)
 vim.opt.listchars = "eol:¬,tab:>-,trail:~,extends:>,precedes:<,space:·"
