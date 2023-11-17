@@ -1,0 +1,8 @@
+*.swp
+f/
+bin/mail-sync.sh
+**/newsboat/.newsboat/cache.db*
+**/newsboat/.newsboat/history.cmdline
+**/newsboat/.newsboat/ttrss-pw.txt
+**/xmonad/*.hi
+**/xmonad/*.o
