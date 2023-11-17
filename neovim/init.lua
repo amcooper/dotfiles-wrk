@@ -15,9 +15,6 @@ vim.opt.listchars = "eol:¬,tab:>-,trail:~,extends:>,precedes:<,space:·"
 -- Show line numbers
 vim.opt.number = true
 
--- Vertically splitting a window (:vsplit) places new window to the right
-vim.opt.splitright = true
-
 -- Highlight cursor line
 vim.opt.cursorline = true
 
@@ -27,9 +24,6 @@ vim.opt.foldlevel = 99
 
 -- Terminal colors
 vim.opt.termguicolors = true
-
--- Cursor line context
-vim.opt.scrolloff = 5
 
 -- netrw
 -- This is the workspace file explorer
@@ -48,8 +42,6 @@ vim.keymap.set("t", "<c-j>", "<c-\\><c-n><c-w>j", { noremap = true })
 vim.keymap.set("t", "<c-k>", "<c-\\><c-n><c-w>k", { noremap = true })
 vim.keymap.set("t", "<c-h>", "<c-\\><c-n><c-w>h", { noremap = true })
 vim.keymap.set("t", "<c-l>", "<c-\\><c-n><c-w>l", { noremap = true })
-
-vim.keymap.set({"i", "n", "t", "v"}, "<F10>", function () vim.cmd("nohlsearch") end)
 
 -- lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -93,7 +85,6 @@ require("lazy").setup({
   "hrsh7th/cmp-vsnip",
   "hrsh7th/vim-vsnip",
   "hrsh7th/cmp-nvim-lsp-signature-help",
-  "tpope/vim-fugitive",
   "lewis6991/gitsigns.nvim",
   "tpope/vim-surround",
   {
