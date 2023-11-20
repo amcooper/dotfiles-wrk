@@ -51,6 +51,10 @@ vim.keymap.set("t", "<c-l>", "<c-\\><c-n><c-w>l", { noremap = true })
 
 vim.keymap.set({"i", "n", "t", "v"}, "<F10>", function () vim.cmd("nohlsearch") end)
 
+vim.keymap.set({"n", "t"}, "<leader>z", function ()
+    vim.cmd("execute idelayout")
+end)
+
 -- lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -72,8 +76,17 @@ require("lazy").setup({
     lazy = false,
     priority = 1000,
     config = function ()
-      vim.cmd([[colorscheme dracula]])
+      vim.cmd.colorscheme("dracula")
     end,
+  },
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 500
+    end,
+    opts = {},
   },
   "williamboman/mason.nvim",
   "williamboman/mason-lspconfig.nvim",
@@ -96,14 +109,6 @@ require("lazy").setup({
   "tpope/vim-fugitive",
   "lewis6991/gitsigns.nvim",
   "tpope/vim-surround",
-  {
-    "folke/which-key.nvim",
-    event = "VeryLazy",
-    init = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 300
-    end,
-  }
 })
 
 require('mason').setup()
