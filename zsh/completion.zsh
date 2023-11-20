@@ -73,3 +73,6 @@ fi
 
 # automatically load bash completion functions
 autoload -U +X bashcompinit && bashcompinit
+
+# ripgrep completion
+source /opt/homebrew/share/zsh/site-functions/_rg

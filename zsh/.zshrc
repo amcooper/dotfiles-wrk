@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=/opt/homebrew/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 HISTFILE=$ZDOTDIR/.zsh_history
 
@@ -21,7 +21,7 @@ setopt long_list_jobs
 setopt interactivecomments
 
 # Initialize the completion system
-# fpath=(~/config/zsh/.zsh $fpath)
+fpath=(~/.config/zsh /opt/homebrew/share/zsh/site-functions $fpath)
 autoload -U compinit ; compinit
 
 ## Vi keybindings for the shell ##
@@ -43,23 +43,12 @@ bindkey '^[[B' history-beginning-search-forward-end
 ## Aliases
 source ~/.config/zsh/aliases.zsh
 
-source ~/.config/zsh/completion.zsh
+# source ~/.config/zsh/completion.zsh
 source ~/.config/zsh/termsupport.zsh
 source ~/.config/zsh/theme-and-appearance.zsh
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
-
-# Add pwd to history
-# This version should strip any existing pwd from the command before adding the
-# current pwd. This eliminates the pileup of these pwd comments when reusing
-# old commands (e.g., with up-arrow).
-# function zshaddhistory() {
-  # history_item="${${1%%$'\n'}%%$' ###'*} ### ${PWD}"
-  # print -sr ${(z)history_item}
-  # fc -p
-  # return 1
-# }
 
 # Starship
 eval "$(starship init zsh)"
@@ -116,33 +105,10 @@ cursor_mode
 ## zoxide ##
 eval "$(zoxide init zsh)"
 
-# navi #
-eval "$(navi widget zsh)"
-
-# tmuxp completion
-# N.B. This throws a "parse error" as of 2022-10-12
-# eval "$(_TMUXP_COMPLETE=source_zsh tmuxp)"
-
-source /home/adam/.cargo/env
-
 # nvm
-[ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.config/nvm"
-source /usr/share/nvm/nvm.sh
-source /usr/share/nvm/bash_completion
-source /usr/share/nvm/install-nvm-exec
-
-# rbenv
-eval "$(~/.rbenv/bin/rbenv init - zsh)"
-
-# broot
-source /home/adam/.config/broot/launcher/bash/br
-
-# tea
-PROG=tea _CLI_ZSH_AUTOCOMPLETE_HACK=1 source "/home/adam/.config/tea/autocomplete.zsh"
-
-# gomphotherium
-export GOMPHOTHERIUM_SERVER='https://toot.cat'
-export GOMPHOTHERIUM_ACCESS_TOKEN='qqscVpLBugWAv6cFUqu1vBm0QMbgsWTiafg7TwZsTec'
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # ripgrep-all
 rga-fzf() {
@@ -158,4 +124,3 @@ rga-fzf() {
 	echo "opening $file" &&
 	xdg-open "$file"
 }
-

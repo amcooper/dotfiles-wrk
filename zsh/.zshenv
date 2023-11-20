@@ -7,7 +7,9 @@ export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 export HISTSIZE=9998
 export SAVEHIST=10000
 
-export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.cargo/env:$HOME/code/go/bin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:/usr/local/go/bin:/usr/sbin:/usr/bin:/sbin:/bin:$HOME/.rbenv:$PATH"
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+export PATH="$HOME/.local/bin:$HOME/code/go/bin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:/usr/local/go/bin:$HOME/.rbenv:$PATH:/usr/sbin:/usr/bin:/sbin:/bin"
 
 # export MANPATH="/usr/local/man:$MANPATH"
 

@@ -6,7 +6,7 @@ vim.opt.clipboard = "unnamedplus,unnamed"
 
 -- Spaces indentation
 vim.opt.expandtab = true -- converts tabs to spaces
-vim.opt.tabstop = 4 -- tab equals 2 spaces
+vim.opt.tabstop = 4 -- tab equals 4 spaces
 vim.opt.shiftwidth = 4 -- indent size in characters
 
 -- Show whitespace (:list)
