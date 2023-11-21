@@ -3,11 +3,12 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.config/local/share"
 export XDG_CACHE_HOME="$HOME/.config/cache"
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+export NVM_DIR="$HOME/.nvm"
 
 export HISTSIZE=9998
 export SAVEHIST=10000
 
-export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.cargo/env:$HOME/code/go/bin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:/usr/local/go/bin:/usr/sbin:/usr/bin:/sbin:/bin:$HOME/.rbenv:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.cargo/env:$HOME/code/go/bin:/opt/homebrew/bin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:/usr/local/go/bin:/usr/sbin:/usr/bin:/sbin:/bin:$HOME/.rbenv:$PATH"
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
