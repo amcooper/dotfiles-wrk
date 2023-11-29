@@ -376,6 +376,9 @@ require('gitsigns').setup({
 
 require('lspsaga').setup()
 
+-- Tweak GitSigns blame color
+vim.cmd("highlight GitSignsCurrentLineBlame gui=bold guifg=#339944")
+
 -- Switch syntax highlighting on
 vim.cmd("syntax enable")
 
