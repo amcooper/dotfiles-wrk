@@ -61,9 +61,14 @@ vim.keymap.set("t", "<c-l>", "<c-\\><c-n><c-w>l", { noremap = true })
 
 vim.keymap.set({"i", "n", "t", "v"}, "<F10>", function () vim.cmd("nohlsearch") end)
 
-vim.keymap.set({"n", "t"}, "<leader>z", function ()
-  vim.cmd("execute idelayout")
-end)
+vim.keymap.set(
+    {"n", "t"},
+    "<leader>z",
+    function ()
+        vim.cmd("execute idelayout")
+    end,
+    { desc = "Restore IDE layout" }
+)
 
 -- lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -378,6 +383,7 @@ require('lspsaga').setup()
 
 -- Tweak GitSigns blame color
 vim.cmd("highlight GitSignsCurrentLineBlame gui=bold guifg=#339944")
+vim.cmd("highlight NonText gui=bold guifg=#999999")
 
 -- Switch syntax highlighting on
 vim.cmd("syntax enable")
