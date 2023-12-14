@@ -36,10 +36,10 @@ vim.opt.foldmethod = "syntax"
 vim.opt.foldlevel = 3
 vim.opt.foldcolumn = "auto:9"
 
--- Terminal colors
+-- Enable 24-bit RGB color in the TUI
 vim.opt.termguicolors = true
 
--- Cursor line context
+-- Minimal number of lines kept above and below the cursor
 vim.opt.scrolloff = 5
 
 -- netrw
@@ -51,30 +51,36 @@ vim.g.netrw_liststyle = 3 -- tree style listing
 -- vim.keymap.set("t", "<leader>n", "<c-\\><c-n>", { noremap = true })
 
 -- Sane vim split naviagation (via Gaslight blog)
-vim.keymap.set("n", "<c-j>", "<c-w>j", { noremap = true })
-vim.keymap.set("n", "<c-k>", "<c-w>k", { noremap = true })
-vim.keymap.set("n", "<c-h>", "<c-w>h", { noremap = true })
+vim.keymap.set("n", "<c-j>", "<c-w>j", { noremap = true, desc = 'Go to window below' })
+vim.keymap.set("n", "<c-k>", "<c-w>k", { noremap = true, desc = 'Go to window above' })
+vim.keymap.set("n", "<c-h>", "<c-w>h", { noremap = true, desc = 'Go to window to the left' })
+vim.keymap.set("n", "<c-l>", "<c-w>l", { noremap = true })
 
--- This keybind interferes with <c-l> (refresh listing) in NetRW.
--- Substitute the standard chord `<c-w>l`.
--- vim.keymap.set("n", "<c-l>", "<c-w>l", { noremap = true })
-vim.keymap.set("t", "<c-j>", "<c-\\><c-n><c-w>j", { noremap = true })
-vim.keymap.set("t", "<c-k>", "<c-\\><c-n><c-w>k", { noremap = true })
-vim.keymap.set("t", "<c-h>", "<c-\\><c-n><c-w>h", { noremap = true })
-vim.keymap.set("t", "<c-l>", "<c-\\><c-n><c-w>l", { noremap = true })
+-- N.B. This conflicts with the NetRW directory refresh command.
+vim.keymap.set("n", "<c-l>", "<c-w>l", { noremap = true, desc = 'Go to window to the right' })
+vim.keymap.set("t", "<c-j>", "<c-\\><c-n><c-w>j", { noremap = true, desc = 'Go to window below' })
+vim.keymap.set("t", "<c-k>", "<c-\\><c-n><c-w>k", { noremap = true, desc = 'Go to window above' })
+vim.keymap.set("t", "<c-h>", "<c-\\><c-n><c-w>h", { noremap = true, desc = 'Go to window to the left' })
+vim.keymap.set("t", "<c-l>", "<c-\\><c-n><c-w>l", { noremap = true, desc = 'Go to window to the right' })
 
 vim.keymap.set(
-    {"i", "n", "t", "v"},
-    "<F10>",
-    function () vim.cmd("nohlsearch") end,
-    { desc = "Clear search match highlight" }
+  {"i", "n", "t", "v"},
+  "<F10>",
+  function ()
+    vim.cmd("nohlsearch")
+  end,
+  { desc = ":nohlsearch" }
 )
 
 vim.keymap.set(
-    {"n", "t"},
-    "<leader>z",
-    function () vim.cmd("execute idelayout") end,
-    { desc = "Restore IDE layout" }
+  {"n", "t"},
+  "<leader>z",
+  function ()
+    -- This restores the UI to the saved layout 'idelayout' (if saved on command line)
+    -- TODO: Wrap the function body in an if statement to verify existence of idelayout
+    vim.cmd("exec idelayout")
+  end,
+  { desc = "Revert window layout" }
 )
 
 -- lazy.nvim
