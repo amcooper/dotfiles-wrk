@@ -54,15 +54,16 @@ vim.g.netrw_liststyle = 3 -- tree style listing
 vim.keymap.set("n", "<c-j>", "<c-w>j", { noremap = true, desc = 'Go to window below' })
 vim.keymap.set("n", "<c-k>", "<c-w>k", { noremap = true, desc = 'Go to window above' })
 vim.keymap.set("n", "<c-h>", "<c-w>h", { noremap = true, desc = 'Go to window to the left' })
-vim.keymap.set("n", "<c-l>", "<c-w>l", { noremap = true })
 
--- N.B. This conflicts with the NetRW directory refresh command.
-vim.keymap.set("n", "<c-l>", "<c-w>l", { noremap = true, desc = 'Go to window to the right' })
+-- N.B. This conflicts with the NetRW directory refresh command as Neovim's own CTRL-L
+-- vim.keymap.set("n", "<c-l>", "<c-w>l", { noremap = true, desc = 'Go to window to the right' })
 vim.keymap.set("t", "<c-j>", "<c-\\><c-n><c-w>j", { noremap = true, desc = 'Go to window below' })
 vim.keymap.set("t", "<c-k>", "<c-\\><c-n><c-w>k", { noremap = true, desc = 'Go to window above' })
 vim.keymap.set("t", "<c-h>", "<c-\\><c-n><c-w>h", { noremap = true, desc = 'Go to window to the left' })
 vim.keymap.set("t", "<c-l>", "<c-\\><c-n><c-w>l", { noremap = true, desc = 'Go to window to the right' })
 
+-- TODO(amcooper): Delete this mapping, as CTRL-L natively clears search match highlighting
+--[[
 vim.keymap.set(
   {"i", "n", "t", "v"},
   "<F10>",
@@ -71,6 +72,7 @@ vim.keymap.set(
   end,
   { desc = ":nohlsearch" }
 )
+]]
 
 vim.keymap.set(
   {"n", "t"},
