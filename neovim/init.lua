@@ -156,7 +156,7 @@ require('lualine').setup {
         lualine_a = {
             {
                 'buffers',
-                mode = 4,
+                mode = 4, -- Displays buffer numbers on tabs at top of window
             }
         },
     }
