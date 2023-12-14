@@ -34,7 +34,7 @@ vim.opt.cursorline = true
 -- Enable folding
 vim.opt.foldmethod = "syntax"
 vim.opt.foldlevel = 3
-vim.opt.foldcolumn = "auto:9"
+vim.opt.foldcolumn = "auto:9" -- Flexible width of fold indicators on window's left side
 
 -- Enable 24-bit RGB color in the TUI
 vim.opt.termguicolors = true
