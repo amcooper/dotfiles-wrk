@@ -115,6 +115,12 @@ require("lazy").setup({
         end,
         opts = {},
     },
+    {
+      "ray-x/lsp_signature.nvim",
+      event = "VeryLazy",
+      opts = {},
+      config = function(_, opts) require'lsp_signature'.setup(opts) end
+    },
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
@@ -153,6 +159,8 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope: find 
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope: live grep' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope: buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope: help tags' })
+
+require("lsp_signature").setup()
 
 --------------------
 -- nvim-lspconfig --
@@ -384,6 +392,10 @@ require('gitsigns').setup({
 })
 
 require('lspsaga').setup()
+
+-- Tweak GitSigns blame color
+vim.cmd("highlight GitSignsCurrentLineBlame gui=bold guifg=#339944")
+vim.cmd("highlight NonText gui=bold guifg=#999999")
 
 -- Switch syntax highlighting on
 vim.cmd("syntax enable")
