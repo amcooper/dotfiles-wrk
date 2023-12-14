@@ -32,8 +32,9 @@ vim.opt.splitright = true
 vim.opt.cursorline = true
 
 -- Enable folding
-vim.opt.foldmethod = "indent"
-vim.opt.foldlevel = 99
+vim.opt.foldmethod = "syntax"
+vim.opt.foldlevel = 3
+vim.opt.foldcolumn = "auto:9"
 
 -- Terminal colors
 vim.opt.termguicolors = true
@@ -53,20 +54,26 @@ vim.g.netrw_liststyle = 3 -- tree style listing
 vim.keymap.set("n", "<c-j>", "<c-w>j", { noremap = true })
 vim.keymap.set("n", "<c-k>", "<c-w>k", { noremap = true })
 vim.keymap.set("n", "<c-h>", "<c-w>h", { noremap = true })
-vim.keymap.set("n", "<c-l>", "<c-w>l", { noremap = true })
+
+-- This keybind interferes with <c-l> (refresh listing) in NetRW.
+-- Substitute the standard chord `<c-w>l`.
+-- vim.keymap.set("n", "<c-l>", "<c-w>l", { noremap = true })
 vim.keymap.set("t", "<c-j>", "<c-\\><c-n><c-w>j", { noremap = true })
 vim.keymap.set("t", "<c-k>", "<c-\\><c-n><c-w>k", { noremap = true })
 vim.keymap.set("t", "<c-h>", "<c-\\><c-n><c-w>h", { noremap = true })
 vim.keymap.set("t", "<c-l>", "<c-\\><c-n><c-w>l", { noremap = true })
 
-vim.keymap.set({"i", "n", "t", "v"}, "<F10>", function () vim.cmd("nohlsearch") end)
+vim.keymap.set(
+    {"i", "n", "t", "v"},
+    "<F10>",
+    function () vim.cmd("nohlsearch") end,
+    { desc = "Clear search match highlight" }
+)
 
 vim.keymap.set(
     {"n", "t"},
     "<leader>z",
-    function ()
-        vim.cmd("execute idelayout")
-    end,
+    function () vim.cmd("execute idelayout") end,
     { desc = "Restore IDE layout" }
 )
 
@@ -101,7 +108,9 @@ require("lazy").setup({
         vim.o.timeout = true
         vim.o.timeoutlen = 500
         end,
-        opts = {},
+        opts = {
+            window = { border = "single" },
+        },
     },
     {
       "ray-x/lsp_signature.nvim",
@@ -138,7 +147,12 @@ require('mason-lspconfig').setup()
 require('lualine').setup {
     options = { theme = 'dracula' },
     tabline = {
-        lualine_a = { 'buffers' },
+        lualine_a = {
+            {
+                'buffers',
+                mode = 4,
+            }
+        },
     }
 }
 
@@ -353,13 +367,13 @@ require('gitsigns').setup({
         if vim.wo.diff then return ']c' end
         vim.schedule(function() gs.next_hunk() end)
         return '<Ignore>'
-      end, {expr=true})
+      end, {expr=true, desc='GitSigns: next hunk'})
 
       map('n', '[c', function()
         if vim.wo.diff then return '[c' end
         vim.schedule(function() gs.prev_hunk() end)
         return '<Ignore>'
-      end, {expr=true})
+      end, {expr=true, desc='GitSigns: previous hunk'})
 
       -- Actions
       map('n', '<leader>hs', gs.stage_hunk, { desc = 'GitSigns: stage hunk' })

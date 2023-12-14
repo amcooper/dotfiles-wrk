@@ -126,3 +126,5 @@ rga-fzf() {
 	xdg-open "$file"
 }
 
+
+source /Users/adamc/.config/broot/launcher/bash/br
