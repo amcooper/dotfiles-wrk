@@ -23,7 +23,8 @@ vim.opt.cursorline = true
 
 -- Enable folding
 vim.opt.foldmethod = "syntax"
-vim.opt.foldlevel = 0
+vim.opt.foldlevel = 3
+vim.opt.foldcolumn = "auto:9" -- Flexible width of fold indicators on window's left side
 
 -- Enable 24-bit RGB color in the TUI
 vim.opt.termguicolors = true
@@ -43,15 +44,16 @@ vim.g.netrw_liststyle = 3 -- tree style listing
 vim.keymap.set("n", "<c-j>", "<c-w>j", { noremap = true, desc = 'Go to window below' })
 vim.keymap.set("n", "<c-k>", "<c-w>k", { noremap = true, desc = 'Go to window above' })
 vim.keymap.set("n", "<c-h>", "<c-w>h", { noremap = true, desc = 'Go to window to the left' })
--- vim.keymap.set("n", "<c-l>", "<c-w>l", { noremap = true })
 
--- N.B. This conflicts with the NetRW directory refresh command.
-vim.keymap.set("n", "<c-l>", "<c-w>l", { noremap = true, desc = 'Go to window to the right' })
+-- N.B. This conflicts with the NetRW directory refresh command as Neovim's own CTRL-L
+-- vim.keymap.set("n", "<c-l>", "<c-w>l", { noremap = true, desc = 'Go to window to the right' })
 vim.keymap.set("t", "<c-j>", "<c-\\><c-n><c-w>j", { noremap = true, desc = 'Go to window below' })
 vim.keymap.set("t", "<c-k>", "<c-\\><c-n><c-w>k", { noremap = true, desc = 'Go to window above' })
 vim.keymap.set("t", "<c-h>", "<c-\\><c-n><c-w>h", { noremap = true, desc = 'Go to window to the left' })
-vim.keymap.set("t", "<c-l>", "<c-\\><c-n><c-w>l", { noremap = true, desc = 'Go to window to the right' })
+-- vim.keymap.set("t", "<c-l>", "<c-\\><c-n><c-w>l", { noremap = true, desc = 'Go to window to the right' })
 
+-- TODO(amcooper): Delete this mapping, as CTRL-L natively clears search match highlighting
+--[[
 vim.keymap.set(
   {"i", "n", "t", "v"},
   "<F10>",
@@ -60,6 +62,7 @@ vim.keymap.set(
   end,
   { desc = ":nohlsearch" }
 )
+]]
 
 vim.keymap.set(
   {"n", "t"},
@@ -161,15 +164,15 @@ Lualine provides the status bar as well as the tabline. Not sure whether
 it also provides the buffer breadcrumbs.
 --]]
 require('lualine').setup {
-  options = { theme = 'dracula' },
-  tabline = {
-    lualine_a = {
-      {
-        'buffers',
-        mode = 4,
-      },
-    },
-  },
+    options = { theme = 'dracula' },
+    tabline = {
+        lualine_a = {
+            {
+                'buffers',
+                mode = 4, -- Displays buffer numbers on tabs at top of window
+            }
+        },
+    }
 }
 
 --[[ Telescope
@@ -381,7 +384,6 @@ require('gitsigns').setup({
   },
   on_attach = function(bufnr)
     local gs = package.loaded.gitsigns
-
     local function map(mode, l, r, opts)
       opts = opts or {}
       opts.buffer = bufnr
