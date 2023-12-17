@@ -149,6 +149,7 @@ require("lazy").setup({
   "hrsh7th/cmp-nvim-lsp-signature-help",
   "tpope/vim-fugitive",
   "lewis6991/gitsigns.nvim",
+  "famiu/bufdelete.nvim",
 })
 
 --[[ mason
