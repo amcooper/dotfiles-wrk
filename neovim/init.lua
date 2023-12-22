@@ -16,7 +16,7 @@ vim.opt.clipboard = "unnamedplus,unnamed"
 
 -- Spaces indentation
 vim.opt.expandtab = true -- converts tabs to spaces
-vim.opt.tabstop = 4 -- tab equals 2 spaces
+vim.opt.tabstop = 4 -- tab equals 4 spaces
 vim.opt.shiftwidth = 4 -- indent size in characters
 
 -- Show whitespace (:list)
@@ -60,7 +60,7 @@ vim.keymap.set("n", "<c-h>", "<c-w>h", { noremap = true, desc = 'Go to window to
 vim.keymap.set("t", "<c-j>", "<c-\\><c-n><c-w>j", { noremap = true, desc = 'Go to window below' })
 vim.keymap.set("t", "<c-k>", "<c-\\><c-n><c-w>k", { noremap = true, desc = 'Go to window above' })
 vim.keymap.set("t", "<c-h>", "<c-\\><c-n><c-w>h", { noremap = true, desc = 'Go to window to the left' })
-vim.keymap.set("t", "<c-l>", "<c-\\><c-n><c-w>l", { noremap = true, desc = 'Go to window to the right' })
+-- vim.keymap.set("t", "<c-l>", "<c-\\><c-n><c-w>l", { noremap = true, desc = 'Go to window to the right' })
 
 -- TODO(amcooper): Delete this mapping, as CTRL-L natively clears search match highlighting
 --[[
@@ -147,6 +147,7 @@ require("lazy").setup({
     "tpope/vim-fugitive",
     "lewis6991/gitsigns.nvim",
     "tpope/vim-surround",
+    "famiu/bufdelete.nvim",
 })
 
 require('mason').setup()
@@ -401,7 +402,28 @@ require('gitsigns').setup({
     end
 })
 
-require('lspsaga').setup()
+require('lspsaga').setup({
+    beacon = {
+        enable = true,
+        frequency = 7,
+    }
+})
+vim.keymap.set('n', '<leader>si', '<cmd>Lspsaga incoming_calls<CR>')
+vim.keymap.set('n', '<leader>so', '<cmd>Lspsaga outgoing_calls<CR>')
+vim.keymap.set('n', '<leader>ca', '<cmd>Lspsaga code_action<CR>')
+vim.keymap.set('n', '<leader>sd', '<cmd>Lspsaga peek_definition<CR>')
+vim.keymap.set('n', '<leader>sp', '<cmd>Lspsaga peek_type_definition<CR>')
+vim.keymap.set('n', '<leader>sx', '<cmd>Lspsaga goto_definition<CR>')
+vim.keymap.set('n', '<leader>sg', '<cmd>Lspsaga goto_type_definition<CR>')
+vim.keymap.set('n', '[e', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
+vim.keymap.set('n', ']e', '<cmd>Lspsaga diagnostic_jump_next<CR>')
+vim.keymap.set('n', '<leader>sK', '<cmd>Lspsaga hover_doc<CR>')
+vim.keymap.set('n', '<leader>sm', '<cmd>Lspsaga finder imp<CR>')
+vim.keymap.set('n', '<leader>sf', '<cmd>Lspsaga finder<CR>')
+vim.keymap.set('n', '<leader>sl', '<cmd>Lspsaga outline<CR>')
+vim.keymap.set('n', '<leader>rn', '<cmd>Lspsaga rename<CR>')
+vim.keymap.set('n', '<leader>st', '<cmd>Lspsaga term_toggle<CR>')
+
 
 -- Tweak GitSigns blame color
 vim.cmd("highlight GitSignsCurrentLineBlame gui=bold guifg=#339944")
