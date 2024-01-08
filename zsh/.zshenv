@@ -45,3 +45,4 @@ export NAVI_COMMENT_COLOR=3
 
 # Consolidate PATH
 # export PATH="$(consolidate-path "$PATH")"
+. "$HOME/.cargo/env"
