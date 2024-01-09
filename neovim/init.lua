@@ -481,7 +481,7 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
 --]]
 
 vim.diagnostic.config{
-  float={border=_border}
+  float = { border = _border, max_width = 120 }
 }
 
 -- Use LspAttach autocommand to only map the following keys
