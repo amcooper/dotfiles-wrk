@@ -219,12 +219,27 @@ require("lazy").setup({
                 desc = "Step Over",
             },
             {
+                "<leader>db",
+                function()
+                    require("dap").toggle_breakpoint()
+                end,
+                desc = "Toggle breakpoint",
+            },
+            {
+                "<leader>dc",
+                function()
+                    require("dap").continue()
+                end,
+                desc = "Continue",
+            },
+            {
                 "<leader>da",
                 function()
                     if vim.fn.filereadable(".vscode/launch.json") then
                         local dap_vscode = require("dap.ext.vscode")
                         dap_vscode.load_launchjs(nil, {
                             ["pwa-node"] = js_based_languages,
+                            ["node"] = js_based_languages,
                             ["chrome"] = js_based_languages,
                             ["pwa-chrome"] = js_based_languages,
                         })
@@ -306,6 +321,9 @@ require("lazy").setup({
     "tpope/vim-surround",
     "famiu/bufdelete.nvim",
 })
+
+-- Fix for lua-json5 on macOS
+table.insert(vim._so_trails, "/?.dylib")
 
 --[[ mason
 Mason manages external editor plugins such as LSP servers, DAP servers,
@@ -481,7 +499,7 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
 --]]
 
 vim.diagnostic.config{
-  float={border=_border}
+  float = { border = _border, max_width = 120 }
 }
 
 -- Use LspAttach autocommand to only map the following keys
@@ -625,6 +643,7 @@ vim.keymap.set('n', '<leader>st', '<cmd>Lspsaga term_toggle<CR>')
 local dap, dapui = require("dap"), require("dapui")
 dapui.setup()
 
+vim.keymap.set('n', '<leader>dt', function() dapui.toggle() end, { desc = 'DAP-UI toggle' })
 dap.listeners.after.event_initialized["dapui_config"] = function()
   dapui.open()
 end
