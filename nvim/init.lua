@@ -112,11 +112,13 @@ require("lazy").setup({
     {
         "folke/which-key.nvim",
         event = "VeryLazy",
+        --[[
         init = function()
             vim.o.timeout = true
             -- N.B. Setting `timeoutlen` to 0 seems to break the plugin
             vim.o.timeoutlen = 300 -- 0? 500? 300?
         end,
+        --]]
         opts = {
             window = {
                 border = "single",
