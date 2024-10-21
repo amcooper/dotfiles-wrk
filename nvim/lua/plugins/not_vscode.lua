@@ -29,11 +29,7 @@ return {
         "kylechui/nvim-surround",
         version = "*", -- Use for stability; omit to use `main` branch for the latest features
         event = "VeryLazy",
-        config = function()
-            require("nvim-surround").setup({
-                    -- Configuration here, or leave empty to use defaults
-            })
-        end
+        opts = {},
     },
     {
         "folke/which-key.nvim",
@@ -53,7 +49,6 @@ return {
         "ray-x/lsp_signature.nvim",
         event = "VeryLazy",
         opts = {},
-        config = function(_, opts) require'lsp_signature'.setup(opts) end
     },
     {
         "rcarriga/nvim-dap-ui",
@@ -177,6 +172,7 @@ return {
             {
                 "<leader>da",
                 function()
+                    local js_based_languages = { "javascript", "typescript" }
                     if vim.fn.filereadable(".vscode/launch.json") then
                         local dap_vscode = require("dap.ext.vscode")
                         dap_vscode.load_launchjs(nil, {
@@ -242,7 +238,33 @@ return {
     },
     { "williamboman/mason.nvim", opts = {}, event = "VeryLazy" },
     { "williamboman/mason-lspconfig.nvim", opts = {}, event = "VeryLazy" },
-    { "nvimdev/lspsaga.nvim", event = "VeryLazy" },
+    {
+        "nvimdev/lspsaga.nvim",
+        event = "VeryLazy",
+        opts = {
+            beacon = {
+                enable = true,
+                frequency = 7,
+            }
+        },
+        keys = {
+            { "<leader>si", require("lspsaga").incoming_calls, desc = "LSPSaga: Incoming calls" },
+            { "<leader>so", require("lspsaga").outgoing_calls, desc = "LSPSaga: outgoing calls" },
+            { "<leader>ca", require("lspsaga").code_action, desc = "LSPSaga: code action" },
+            { "<leader>sd", require("lspsaga").peek_definition, desc = "LSPSaga: peek definition" },
+            { "<leader>sp", require("lspsaga").peek_type_definition, desc = "LSPSaga: peek type definition" },
+            { "<leader>sx", require("lspsaga").goto_definition, desc = "LSPSaga: goto definition" },
+            { "<leader>sg", require("lspsaga").goto_type_definition, desc = "LSPSaga: goto type definition" },
+            { "[e", require("lspsaga").diagnostic_jump_prev, desc = "LSPSaga: diagnostic jump prev" },
+            { "]e", require("lspsaga").diagnostic_jump_next, desc = "LSPSaga: diagnostic jump next" },
+            { "<leader>sK", require("lspsaga").hover_doc, desc = "LSPSaga: hover doc" },
+            { "<leader>sm", require("lspsaga").finder_imp, desc = "LSPSaga: finder imp" },
+            { "<leader>sf", require("lspsaga").finder, desc = "LSPSaga: finder" },
+            { "<leader>sl", require("lspsaga").outline, desc = "LSPSaga: outline" },
+            { "<leader>rn", require("lspsaga").rename, desc = "LSPSaga: rename" },
+            { "<leader>st", require("lspsaga").term_toggle, desc = "LSPSaga: term toggle" },
+        },
+    },
     {
         "nvim-telescope/telescope.nvim",
         event = "VeryLazy",
@@ -300,8 +322,17 @@ return {
                     ['<C-e>'] = cmp.mapping.abort(),
                     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
                 }),
-            }
-        end,
+                cmdline = function() -- Not sure if this is correct.
+                    return {
+                        { '/', '?' },
+                        {
+                            mapping = cmp.mapping.preset.cmdline(),
+                            sources = {
+                                { name = 'buffer' },
+                            },
+                        },
+                    }
+                end,
 --[[
 -- Set configuration for specific filetype.
 cmp.setup.filetype('gitcommit', {
@@ -330,6 +361,8 @@ cmp.setup.cmdline(':', {
     })
 })
 --]]
+            }
+        end,
     },
     { "tpope/vim-fugitive", event = "VeryLazy" },
     { "lewis6991/gitsigns.nvim", event = "VeryLazy" },

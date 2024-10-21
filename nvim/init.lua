@@ -86,8 +86,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local js_based_languages = { "javascript", "typescript" }
-
 require("lazy").setup({
     { import = "plugins.always",     cond = true },
     { import = "plugins.not_vscode", cond = (function() return not vim.g.vscode end) },
@@ -96,7 +94,8 @@ require("lazy").setup({
 -- Fix for lua-json5 on macOS
 table.insert(vim._so_trails, "/?.dylib")
 
-require"lsp_signature".setup()
+-- See not_vscode.lua
+-- require"lsp_signature".setup()
 
 
 --[[ nvim-lspconfig
@@ -300,31 +299,6 @@ require('gitsigns').setup({
 
     end
 })
-
---[[
--- LSPSaga : provides a diverse basket of utilities
---]]
-require('lspsaga').setup({
-    beacon = {
-        enable = true,
-        frequency = 7,
-    }
-})
-vim.keymap.set('n', '<leader>si', '<cmd>Lspsaga incoming_calls<CR>')
-vim.keymap.set('n', '<leader>so', '<cmd>Lspsaga outgoing_calls<CR>')
-vim.keymap.set('n', '<leader>ca', '<cmd>Lspsaga code_action<CR>')
-vim.keymap.set('n', '<leader>sd', '<cmd>Lspsaga peek_definition<CR>')
-vim.keymap.set('n', '<leader>sp', '<cmd>Lspsaga peek_type_definition<CR>')
-vim.keymap.set('n', '<leader>sx', '<cmd>Lspsaga goto_definition<CR>')
-vim.keymap.set('n', '<leader>sg', '<cmd>Lspsaga goto_type_definition<CR>')
-vim.keymap.set('n', '[e', '<cmd>Lspsaga diagnostic_jump_prev<CR>')
-vim.keymap.set('n', ']e', '<cmd>Lspsaga diagnostic_jump_next<CR>')
-vim.keymap.set('n', '<leader>sK', '<cmd>Lspsaga hover_doc<CR>')
-vim.keymap.set('n', '<leader>sm', '<cmd>Lspsaga finder imp<CR>')
-vim.keymap.set('n', '<leader>sf', '<cmd>Lspsaga finder<CR>')
-vim.keymap.set('n', '<leader>sl', '<cmd>Lspsaga outline<CR>')
-vim.keymap.set('n', '<leader>rn', '<cmd>Lspsaga rename<CR>')
-vim.keymap.set('n', '<leader>st', '<cmd>Lspsaga term_toggle<CR>')
 
 -- DAP
 local dap, dapui = require("dap"), require("dapui")
