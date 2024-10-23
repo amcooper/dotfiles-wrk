@@ -120,7 +120,7 @@ require("lazy").setup({
         end,
         --]]
         opts = {
-            window = {
+            win = {
                 border = "single",
             },
         },
@@ -131,6 +131,7 @@ require("lazy").setup({
         opts = {},
         config = function(_, opts) require'lsp_signature'.setup(opts) end
     },
+    { "nvim-neotest/nvim-nio" },
     {
         "rcarriga/nvim-dap-ui",
         event = "VeryLazy",
@@ -482,7 +483,7 @@ local lspconfig = require('lspconfig')
 lspconfig.gopls.setup {capabilities = capabilities}
 lspconfig.lua_ls.setup(lua_ls_setup)
 lspconfig.pyright.setup {capabilities = capabilities}
-lspconfig.tsserver.setup {capabilities = capabilities}
+lspconfig.ts_ls.setup {capabilities = capabilities}
 lspconfig.rust_analyzer.setup {
     -- Server-specific settings. See `:help lspconfig-setup`
     capabilities = capabilities,
@@ -591,9 +592,6 @@ require('gitsigns').setup({
         relative = 'cursor',
         row = 0,
         col = 1
-    },
-    yadm = {
-        enable = false
     },
     on_attach = function(bufnr)
         local gs = package.loaded.gitsigns
