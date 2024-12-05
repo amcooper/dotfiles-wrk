@@ -7,10 +7,10 @@ local config = wezterm.config_builder()
 
 -- This is where you actually apply your config changes
 -- For example, changing the color scheme:
-config.color_scheme = 'Dracula (Official)'
+config.color_scheme = 'Modus-Vivendi-Tinted'
 config.use_fancy_tab_bar = false
 config.hide_tab_bar_if_only_one_tab = true
-config.font = wezterm.font 'VictorMono Nerd Font'
+config.font = wezterm.font '0xProto Nerd Font'
 config.font_size = 14
 config.mouse_bindings = {
     -- Ctrl-click will open the link under the mouse cursor

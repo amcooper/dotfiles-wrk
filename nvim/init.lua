@@ -85,6 +85,7 @@ vim.opt.rtp:prepend(lazypath)
 local js_based_languages = { "javascript", "typescript" }
 
 require("lazy").setup({
+    --[[
     {
         url = "https://git.theadamcooper.com/adam/dracula-vim.git",
         branch = "adamc-main",
@@ -95,6 +96,14 @@ require("lazy").setup({
             vim.cmd.colorscheme("dracula")
         end,
     },
+    --]]
+    {
+        "Shatur/neovim-ayu",
+        config = function()
+            vim.cmd.colorscheme("ayu")
+        end,
+    },
+    "c9rgreen/vim-colors-modus",
     "nvim-lualine/lualine.nvim",
     "nvim-tree/nvim-web-devicons",
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
@@ -344,6 +353,30 @@ require("lazy").setup({
     { "tpope/vim-fugitive", event = "VeryLazy" },
     { "lewis6991/gitsigns.nvim", event = "VeryLazy" },
     { "famiu/bufdelete.nvim", event = "VeryLazy" },
+    { "jparise/vim-graphql", event = "VeryLazy" },
+    {
+        'MeanderingProgrammer/markdown.nvim',
+        -- name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
+        dependencies = {
+            'nvim-treesitter/nvim-treesitter', -- Mandatory
+            'nvim-tree/nvim-web-devicons', -- Optional but recommended
+        },
+        config = function()
+            require('render-markdown').setup({})
+        end,
+    },
+    {
+        "pwntester/octo.nvim",
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            'nvim-telescope/telescope.nvim',
+            'nvim-tree/nvim-web-devicons',
+        },
+        config = function()
+            require"octo".setup()
+        end,
+        event = "VeryLazy",
+    },
 })
 
 -- Fix for lua-json5 on macOS
@@ -361,7 +394,7 @@ require('mason-lspconfig').setup()
 Lualine provides the status bar as well as the tabline.
 --]]
 require('lualine').setup {
-    options = { theme = 'dracula' },
+    options = { theme = 'ayu' },
     tabline = {
         lualine_a = {
             {
@@ -377,7 +410,12 @@ Telescope provides lists, pickers, etc. This section includes just the
 functions bound to keymaps.
 --]]
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope: find files' })
+vim.keymap.set(
+    'n',
+    '<leader>ff',
+    "<cmd>lua require('telescope.builtin').find_files({ find_command = { 'rg', '--files', '--hidden', '-g', '!.git' } })<cr>",
+    { desc = 'Telescope: find files' }
+)
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope: live grep' })
 vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope: buffers' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope: help tags' })
@@ -480,10 +518,11 @@ local lua_ls_setup = {
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local lspconfig = require('lspconfig')
+lspconfig.ts_ls.setup {capabilities = capabilities}
+lspconfig.graphql.setup {capabilities = capabilities}
 lspconfig.gopls.setup {capabilities = capabilities}
 lspconfig.lua_ls.setup(lua_ls_setup)
 lspconfig.pyright.setup {capabilities = capabilities}
-lspconfig.ts_ls.setup {capabilities = capabilities}
 lspconfig.rust_analyzer.setup {
     -- Server-specific settings. See `:help lspconfig-setup`
     capabilities = capabilities,
