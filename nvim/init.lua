@@ -85,25 +85,13 @@ vim.opt.rtp:prepend(lazypath)
 local js_based_languages = { "javascript", "typescript" }
 
 require("lazy").setup({
-    --[[
     {
-        url = "https://git.theadamcooper.com/adam/dracula-vim.git",
-        branch = "adamc-main",
-        name = "dracula",
-        lazy = false,
+        "afair/vibrantink2",
         priority = 1000,
-        config = function ()
-            vim.cmd.colorscheme("dracula")
-        end,
-    },
-    --]]
-    {
-        "Shatur/neovim-ayu",
         config = function()
-            vim.cmd.colorscheme("ayu")
-        end,
+            vim.cmd.colorscheme("vibrantink2")
+        end
     },
-    "c9rgreen/vim-colors-modus",
     "nvim-lualine/lualine.nvim",
     "nvim-tree/nvim-web-devicons",
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
@@ -324,7 +312,27 @@ require("lazy").setup({
     },
     { "williamboman/mason.nvim", event = "VeryLazy" },
     { "williamboman/mason-lspconfig.nvim", event = "VeryLazy" },
-    { "nvimdev/lspsaga.nvim", event = "VeryLazy" },
+    {
+        "nvimdev/lspsaga.nvim",
+        event = "VeryLazy",
+        config = function()
+            require('lspsaga').setup({
+                beacon = {
+                    enable = true,
+                    frequency = 7,
+                },
+                symbol_in_winbar = {
+                    enable = true,
+                    folder_level = 3,
+                    delay = 500,
+                },
+            })
+        end,
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+            "nvim-tree/nvim-web-devicons",
+        },
+    },
     {
         "nvim-telescope/telescope.nvim",
         event = "VeryLazy",
@@ -333,7 +341,7 @@ require("lazy").setup({
             "nvim-lua/plenary.nvim",
             {
                 "nvim-telescope/telescope-fzf-native.nvim",
-                build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+                build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release",
             },
         },
     },
@@ -487,11 +495,24 @@ cmp.setup.cmdline(':', {
     })
 })
 
+
 --[[ nvim-lspconfig
 --]]
 
 -- Setup language servers.
 local lua_ls_setup = {
+    --[[ Not sure what was intended here
+    on_init = function(client)
+        if client.workspace_folders then
+            local path = client.workspace_folders[1].name
+            if vim.uv.fs_stat(path..'/.luarc.json') or vim.uv.fs_stat(path..'/.luarc.jsonc') then
+                return
+            end
+        end
+
+        client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+    --]]
+
     settings = {
         Lua = {
             runtime = {
@@ -550,9 +571,9 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
 -- TODO: Is this necessary? Or is signature help being handled with LSPSaga?
 --[[
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-  vim.lsp.handlers.signature_help, {
-    border = _border
-  }
+    vim.lsp.handlers.signature_help, {
+        border = _border
+    }
 )
 --]]
 
@@ -673,13 +694,13 @@ require('gitsigns').setup({
 
 --[[
 -- LSPSaga : provides a diverse basket of utilities
---]]
 require('lspsaga').setup({
     beacon = {
         enable = true,
         frequency = 7,
     }
 })
+--]]
 vim.keymap.set('n', '<leader>si', '<cmd>Lspsaga incoming_calls<CR>')
 vim.keymap.set('n', '<leader>so', '<cmd>Lspsaga outgoing_calls<CR>')
 vim.keymap.set('n', '<leader>ca', '<cmd>Lspsaga code_action<CR>')
