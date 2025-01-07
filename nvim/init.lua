@@ -306,7 +306,7 @@ require("lazy").setup({
             },
             {
                 "Joakker/lua-json5",
-                build = "./install.sh",
+                run = "./install.sh",
             },
         },
     },
