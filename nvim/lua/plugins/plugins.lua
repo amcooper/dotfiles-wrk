@@ -16,6 +16,26 @@ return {
         event = "VimEnter",
         dependencies = { "rcarriga/nvim-notify" }, -- merge with LazyVim spec
     },
+    -- From various Internet sources: an attempt to get GraphQL LSP working
+    -- TODO: Currently not working. `LspLog` shows wrong cmd ?
+    {
+        "neovim/nvim-lspconfig",
+        ---@class PluginLspOpts
+        opts = {
+            ---@type lspconfig.options
+            servers = {
+                graphql = {},
+            },
+            cmd = { "~/builds/graphiql/packages/graphql-language-service-cli/bin/graphql.js", "server", "-m", "stream" },
+            filetypes = { "graphql" },
+            root_dir = require("lspconfig").util.root_pattern(
+                ".git",
+                ".graphqlrc*",
+                ".graphql.config.*",
+                "graphql.config.*"
+            ),
+        },
+    },
 
     -- for typescript, LazyVim also includes extra specs to properly setup lspconfig,
     -- treesitter, mason and typescript.nvim. So instead of the above, you can use:
