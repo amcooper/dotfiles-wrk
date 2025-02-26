@@ -45,7 +45,6 @@ source $HOME/dotfiles/zsh/secrets.zsh
 # Apollo
 source /Users/adamcooper/.rover/env
 export APOLLO_TELEMETRY_DISABLED=1
-export APOLLO_KEY=user:po.nyt.adam.cooper@nytimes.com:ekHUXSj_oN4HCbilaiTQcQ
 
 # Go 
 export GOPRIVATE=github.com/nytimes
