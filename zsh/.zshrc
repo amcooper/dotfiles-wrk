@@ -1,7 +1,9 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-HISTFILE=$ZDOTDIR/.zsh_history
+export HISTFILE=$ZDOTDIR/.zsh_history
+export HISTSIZE=9998
+export SAVEHIST=10000
 
 # terminal colors
 export COLORTERM=24bit
@@ -50,6 +52,14 @@ source ~/.config/zsh/theme-and-appearance.zsh
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+# Use fd (https://github.com/sharkdp/fd) instead of the default find
+# command for listing path candidates.
+# - The first argument to the function ($1) is the base path to start traversal
+# - See the source code (completion.{bash,zsh}) for the details.
+_fzf_compgen_path() {
+  fd --no-ignore --hidden --follow --exclude ".git" . "$1"
+}
+
 # Starship
 eval "$(starship init zsh)"
 
@@ -58,14 +68,6 @@ source <(fzf --zsh)
 # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # source ~/.vim/plugged/fzf/shell/completion.zsh
 # source ~/.vim/plugged/fzf/shell/key-bindings.zsh
-
-# Use fd (https://github.com/sharkdp/fd) instead of the default find
-# command for listing path candidates.
-# - The first argument to the function ($1) is the base path to start traversal
-# - See the source code (completion.{bash,zsh}) for the details.
-_fzf_compgen_path() {
-  fd --no-ignore --hidden --follow --exclude ".git" . "$1"
-}
 
 # Use fd to generate the list for directory completion
 _fzf_compgen_dir() {
@@ -152,24 +154,6 @@ rga-fzf() {
 	echo "opening $file" &&
 	xdg-open "$file"
 }
-
-
-# pnpm
-export PNPM_HOME="/Users/adamcooper/.config/local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
-# java
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-8.jdk/Contents/Home
-
-# samizdat
-source $HOME/code/samizdat-core/.env
-
-# secrets
-source $HOME/dotfiles/zsh/secrets.zsh
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/adamcooper/builds/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/adamcooper/builds/google-cloud-sdk/path.zsh.inc'; fi
