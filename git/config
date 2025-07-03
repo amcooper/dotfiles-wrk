@@ -4,6 +4,7 @@
 
 [core]
     pager = delta
+    attributesfile = ~/.gitattributes
 
 [interactive]
     diffFilter = delta --color-only
@@ -23,8 +24,29 @@
 [credential]
     helper = osxkeychain
 
+# Still working these diff and merge configs out
+
 [diff]
     tool = nvimdiff
+
+[difftool]
+    prompt = false
+
+# [difftool "nvimdiff"]
+#    cmd = nvim -d
+
+[merge]
+    tool = nvimdiff
+
+[merge "mergiraf"]
+    name = mergiraf
+    driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L
+
+[mergetool]
+    prompt = true
+
+# [mergetool "nvimdiff"]
+#    cmd = "nvim -d \"$LOCAL\" \"$REMOTE\" \"$MERGED\" -c 'wincmd w' -c 'wincmd J'"
 
 [url "ssh://git@github.com/"]
     insteadOf = https://github.com/

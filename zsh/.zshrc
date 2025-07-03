@@ -48,6 +48,7 @@ source ~/.config/zsh/aliases.zsh
 source ~/.config/zsh/completion.zsh
 source ~/.config/zsh/termsupport.zsh
 source ~/.config/zsh/theme-and-appearance.zsh
+source ~/.config/zsh/secrets.zsh
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
@@ -163,3 +164,8 @@ if [ -f '/Users/adamcooper/builds/google-cloud-sdk/completion.zsh.inc' ]; then .
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/adamcooper/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions

@@ -33,9 +33,6 @@ export LS_COLORS="rs=0:fi=35:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:
 # Vault
 export VAULT_ADDR="https://vault-prd.dv.nyt.net"
 
-# Artifactory
-source /Users/adamcooper/dotfiles/zsh/secrets.zsh
-
 # samizdat
 source $HOME/code/samizdat-core/.env
 
@@ -51,3 +48,4 @@ export GOPRIVATE=github.com/nytimes
 
 # Drone
 export DRONE_SERVER=https://drone.dv.nyt.net
+source "/Users/adamcooper/.rover/env"
