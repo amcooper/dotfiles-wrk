@@ -8,6 +8,16 @@
 -- N.B. I could restore neo-tree and/or mini-starter
 
 return {
+    {
+        "LazyVim/LazyVim",
+        opts = {
+            colorscheme = "wildcharm",
+        },
+    },
+    {
+        "asiryk/auto-hlsearch.nvim",
+        opts = {},
+    },
     "kovisoft/paredit",
     {
         "hedyhli/outline.nvim",
@@ -105,6 +115,18 @@ return {
             options = {
                 theme = "everforest",
             },
+        },
+    },
+    {
+        url = "https://git.sr.ht/~hedy/markdown-toc.nvim",
+        ft = "markdown",
+        cmd = { "Mtoc" },
+        opts = {},
+    },
+    {
+        "nvim-neo-tree/neo-tree.nvim",
+        opts = {
+            open_files_do_not_replace_types = { "edgy" },
         },
     },
 }
