@@ -20,3 +20,11 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "BufLeave" }, {
         vim.diagnostic.enable(false, { bufnr = 0 })
     end,
 })
+
+vim.api.nvim_create_autocmd({ "FileType" }, {
+    -- pattern = { "*.md", "*.markdown" },
+    pattern = { "markdown" },
+    callback = function()
+        vim.b.autoformat = false
+    end,
+})
